@@ -42,6 +42,8 @@ export function Register({ navigation }) {
                     alert("Email inválido!")
                 } else if(error == "FirebaseError: Firebase: Password should be at least 6 characters (auth/weak-password)."){
                     alert("Senha fraca, coloque uma com pelo menos 6 caracteres.")
+                } else if(error == "FirebaseError: Firebase: Error (auth/email-already-in-use)."){
+                    alert("O email já está em uso.")
                 } else {
                     alert("Ocorreu um erro com seu cadastro: " + error)
                 }
@@ -70,7 +72,7 @@ export function Register({ navigation }) {
                 <Feather name="lock" style={styles.icon} size={25} color={"#000"} />
             </View>
             <View style={styles.buttonarea} >
-                <TouchableOpacity onPress={SignUp} activeOpacity={0.8} style={styles.register} >
+                <TouchableOpacity onPress={() => SignUp()} activeOpacity={0.8} style={styles.register} >
                     <Text style={styles.action} >Cadastrar</Text>
                     <Feather name="upload" style={styles.iconregister} size={30} color={"#FFF"} />
                 </TouchableOpacity>

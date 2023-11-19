@@ -1,12 +1,12 @@
-import { View, Text, StyleSheet, Image, useWindowDimensions } from "react-native";
+import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
 
 
 export function OnboardingItem({ data }){
-    const { width } = useWindowDimensions();
+    const width = Dimensions.get("window").width;
 
     return(
         <View style={[styles.container, {width: width}]} >
-            <Image source={{ uri : data.Image }} style={[styles.image]} />
+            <Image source={{ uri : data.Image }} style={[styles.image, { width: width }]} />
         </View>
     )
 
@@ -14,14 +14,13 @@ export function OnboardingItem({ data }){
 
 const styles = StyleSheet.create({
     container:{
-        height: 240,
+        height: "100%",
         justifyContent: 'flex-end',
         alignItems: 'center',
-        backgroundColor: 'red'
     },
     image:{
-        width: "100%",
-        height: 240,
+        height: "100%",
         resizeMode: 'stretch',
+        borderRadius: 20
     }
 })

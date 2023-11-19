@@ -29,7 +29,6 @@ export function Home({ navigation }) {
         const subscriver = onSnapshot(q, {
             next : (snapshot) => {
                 const userq = []
-                console.log("foi1")
                 
                 snapshot.docs.forEach(doc =>{
                     userq.push({
@@ -37,16 +36,14 @@ export function Home({ navigation }) {
                         ...doc.data(),
                        
                     })
-                    console.log("foi2")
                 })
                 setUser(userq[0])
                 setLoaded(true)
-                console.log("foi3")
+
                 if(loaded){
                     var nome = user.Nome
                     var first = nome.split(' ')[0]
                     setUserName(first)
-                    console.log("foi4")
                 }
             
             }
@@ -149,7 +146,7 @@ const styles = StyleSheet.create({
 
   },
   carousel:{
-    marginTop: 30
+    marginTop: 25
   },
   action:{
     color: "#000",

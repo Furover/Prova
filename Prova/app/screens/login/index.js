@@ -50,7 +50,7 @@ export function Login({ navigation }) {
                 <Feather name="lock" style={styles.icon} size={25} color={"#000"} />
             </View>
             <View style={styles.buttonarea} >
-                <TouchableOpacity onPress={SignIn} activeOpacity={0.8} style={styles.login} >
+                <TouchableOpacity onPress={() => SignIn()} activeOpacity={0.8} style={styles.login} >
                     <Text style={styles.action} >Entrar</Text>
                     <Feather name="log-in" style={styles.iconlogin} size={30} color={"#FFF"} />
                 </TouchableOpacity>
