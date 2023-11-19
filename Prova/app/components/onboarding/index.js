@@ -32,6 +32,7 @@ export function Onboarding(){
 
     useEffect(() => {
         let interval = setInterval(() => {
+            try{
             if(active >= features.length - 1.1){
                 carouselRef.current.scrollToIndex({
                     index: 0,
@@ -42,6 +43,8 @@ export function Onboarding(){
                     index: active + 1,
                     animation: true
                 });
+            }} catch(error){
+                
             }
         }, 3500)
 
