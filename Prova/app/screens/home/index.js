@@ -3,7 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Feather } from 'react-native-vector-icons'
 import { useEffect, useState} from 'react'
 import { app_auth, app_db } from '../../../firebaseConfig'
-import { doc , collection, query, where, onSnapshot, Firestore, documentId} from 'firebase/firestore'
+import { doc , collection, query, where, onSnapshot, documentId} from 'firebase/firestore'
 
 import { Onboarding } from '../../components/onboarding';
 
@@ -29,20 +29,24 @@ export function Home({ navigation }) {
         const subscriver = onSnapshot(q, {
             next : (snapshot) => {
                 const userq = []
+                console.log("foi1")
                 
-                snapshot.docs.forEach(doc =>{   
+                snapshot.docs.forEach(doc =>{
                     userq.push({
                         key : doc.id,
                         ...doc.data(),
                        
                     })
+                    console.log("foi2")
                 })
                 setUser(userq[0])
                 setLoaded(true)
+                console.log("foi3")
                 if(loaded){
                     var nome = user.Nome
                     var first = nome.split(' ')[0]
                     setUserName(first)
+                    console.log("foi4")
                 }
             
             }
@@ -50,7 +54,7 @@ export function Home({ navigation }) {
 
         return() => subscriver()
     
-    },[user])
+    },[loaded])
 
   return (
     <SafeAreaView  style={styles.container}>
@@ -66,6 +70,7 @@ export function Home({ navigation }) {
                 </TouchableOpacity>
             </View>
             <View style={styles.carousel} >
+                <Onboarding/>
             </View>
     </SafeAreaView>
   );
@@ -142,6 +147,9 @@ const styles = StyleSheet.create({
   },
   filtericon:{
 
+  },
+  carousel:{
+    marginTop: 30
   },
   action:{
     color: "#000",
