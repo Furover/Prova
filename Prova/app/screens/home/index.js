@@ -6,17 +6,18 @@ import { app_auth, app_db } from '../../../firebaseConfig'
 import { doc , collection, query, where, onSnapshot, documentId} from 'firebase/firestore'
 
 import { Onboarding } from '../../components/onboarding';
+import { ItemList } from '../../components/itemlist';
 
 export function Home({ navigation }) {
     const [user, setUser] = useState({})
     const [search, setSearch] = useState("");
     const [loaded, setLoaded] = useState(false)
-    const [username, setUserName] = useState("")
+    const [username, setUserName] = useState("...")
 
     useEffect(()=>{
 
         
-    
+        console.log("pedi user")
         const userRef = collection(app_db, 'Users')
     
         const q = query(
@@ -67,7 +68,11 @@ export function Home({ navigation }) {
                 </TouchableOpacity>
             </View>
             <View style={styles.carousel} >
+                <Text style={styles.carouseltxt} >Destaques</Text>
                 <Onboarding/>
+            </View>
+            <View style={styles.items} >
+                <Text style={styles.itemstxt} >Anúncios</Text>
             </View>
     </SafeAreaView>
   );
@@ -146,11 +151,29 @@ const styles = StyleSheet.create({
 
   },
   carousel:{
-    marginTop: 25
+    marginTop: 40,
+    alignItems: 'center',
+    borderRadius: 25,
+    backgroundColor: "#000"
   },
-  action:{
-    color: "#000",
-    fontSize: 22,
+  carouseltxt:{
+    marginVertical: 5,
+    fontWeight: 'bold',
+    fontSize: 20,
+    color: "#FFF"
+  },
+  items:{
+    marginTop: 90,
+    backgroundColor: "#E06E8B",
+    width: "100%",
+    alignItems: 'center',
+    borderRadius: 25
+  },
+  itemstxt:{
+    marginVertical: 5,
+    color: "#FFF",
+    fontSize: 20,
     fontWeight: 'bold'
   }
+
 });

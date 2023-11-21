@@ -9,6 +9,7 @@ import { Initial } from "../screens/initial";
 import { Register } from "../screens/register";
 import { Login } from "../screens/login";
 import { Home } from "../screens/home";
+import { ForgotPswd } from "../screens/forgotpswd";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +29,11 @@ export default function Routes() {
       <Stack.Screen
         name="Login"
         component={Login}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ForgotPswd"
+        component={ForgotPswd}
         options={{ headerShown: false }}
       />
       <Stack.Screen

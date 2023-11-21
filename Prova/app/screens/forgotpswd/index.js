@@ -5,37 +5,10 @@ import { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { app_auth } from '../../../firebaseConfig';
 
-export function Login({ navigation }) {
-    const [email, setEmail] = useState('coralinegaming93@gmail.com')
-    const [senha, setSenha] = useState('1234567')
+export function ForgotPswd({ navigation, route }) {
+    const [email, setEmail] = useState(route.params.paramKey[0])
     const [loading, setLoading] = useState(false);
 
-    const SignIn = async () => {
-        setLoading(true);
-        if(email == "") {
-            alert("Preencha o seu email!")
-            setLoading(false)
-        } else if(senha == "") {
-            alert("Preencha a sua senha!")
-            setLoading(false)
-        } else {
-            try {
-                await signInWithEmailAndPassword(app_auth, email, senha);
-                navigation.navigate("Home");
-            } catch (error) {
-                console.log(error);
-                if(error == "FirebaseError: Firebase: Error (auth/invalid-email)."){
-                    alert("Email inválido!")
-                } else if(error == "FirebaseError: Firebase: Error (auth/invalid-login-credentials)."){
-                    alert("Email ou senha errada!")
-                } else{
-                    alert("Ocorreu um erro com seu login: " + error)
-                }
-            } finally {
-                setLoading(false);
-            }
-        }
-    };
   return (
     <SafeAreaView  style={styles.container} >
             <View style={styles.logoarea} >
@@ -45,17 +18,10 @@ export function Login({ navigation }) {
                 <TextInput value= {email} onChangeText={(text) => setEmail(text)} style={styles.input} placeholder='Email' autoCapitalize='none' />
                 <Feather name="mail" style={styles.icon} size={25} color={"#000"} />
             </View>
-            <View style={styles.lowerinputarea} >
-                <TextInput value= {senha} onChangeText={(text) => setSenha(text)} style={styles.input} placeholder='Senha' autoCapitalize='none' secureTextEntry={true} />
-                <Feather name="lock" style={styles.icon} size={25} color={"#000"} />
-            </View>
-            <TouchableOpacity onPress={() => navigation.navigate("ForgotPswd", {paramKey:[email]})} activeOpacity={0.5} style={styles.forgotpswdbtn} >
-              <Text style={styles.forgotpswdtxt} >Esqueceu a senha?</Text>
-            </TouchableOpacity>
             <View style={styles.buttonarea} >
-                <TouchableOpacity onPress={() => SignIn()} activeOpacity={0.8} style={styles.login} >
-                    <Text style={styles.action} >Entrar</Text>
-                    <Feather name="log-in" style={styles.iconlogin} size={30} color={"#FFF"} />
+                <TouchableOpacity activeOpacity={0.8} style={styles.login} >
+                    <Text style={styles.action} >Alterar senha</Text>
+                    <Feather name="check" style={styles.iconlogin} size={30} color={"#FFF"} />
                 </TouchableOpacity>
             </View>
 
@@ -134,6 +100,7 @@ const styles = StyleSheet.create({
     paddingRight: 27
   },
   buttonarea:{
+    marginTop: "21%",
     alignItems: 'center',
     justifyContent: 'center',
     width: "90%"
@@ -153,16 +120,4 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold'
   },
-  forgotpswdbtn:{
-    marginTop: "4.5%",
-    marginBottom: "10.5%",
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  forgotpswdtxt:{
-    color: "#000",
-    fontSize: 18,
-    fontWeight: '500',
-    textAlign: 'center',
-  }
 });

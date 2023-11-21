@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
     },
     image:{
         height: "100%",
-        resizeMode: 'stretch',
-        borderRadius: 20
+        borderRadius: 25
     }
 })
