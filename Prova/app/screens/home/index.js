@@ -64,7 +64,9 @@ export function Home({ navigation, route }) {
     <SafeAreaView  style={styles.container}>
             <View style={styles.searcharea} >
                 <TextInput onSubmitEditing={() => handleSearch()} value= {search} onChangeText={(text) => setSearch(text)} style={styles.searchinput} placeholder='Pesquisar' autoCapitalize='none' />
-                <Feather name="search" style={styles.searchicon} size={25} color={"rgba(0,0,0,0.75)"} />
+                <TouchableOpacity onPress={() => handleSearch()} style={styles.searchbutton} >
+                  <Feather name="search" style={styles.searchicon} size={25} color={"rgba(0,0,0,0.75)"} />
+                </TouchableOpacity>
             </View>
             <ScrollView>
             <ScrollView>
@@ -124,6 +126,11 @@ const styles = StyleSheet.create({
     paddingRight: 60,
     color: "#000"
 
+  },
+  searchbutton:{
+    position: 'absolute',
+    alignSelf: 'flex-end',
+    justifyContent: 'center'
   },
   searchicon:{
     position: 'absolute',

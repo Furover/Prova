@@ -103,10 +103,10 @@ export function Search({ navigation, route }) {
                 <Feather style={styles.filtericon} name="filter" color={"#FFF"} size={25} />
               </TouchableOpacity>
             </View>
-            {listings.length != 0 && notFound == false ? (
-              <View style={[styles.items, { borderRadius: 25 }]} >
-                  <Text style={styles.itemstxt} >Resultados</Text>
+            <View style={[styles.items, { borderRadius: 25 }]} >
+                <Text style={styles.itemstxt} >Resultados</Text>
                   <View style={styles.itemlist} >
+            {listings.length != 0 && notFound == false ? (
                     <FlatList
                       data={listings}
                       numColumns={2}
@@ -126,14 +126,16 @@ export function Search({ navigation, route }) {
                         </View>
                       )}
                     />
-                </View>
-              </View>
+                
             ) : (
               <View style={styles.nothing} >
                 <Text style={styles.nothingtxt} >Não conseguimos encontrar seu item...</Text>
                 <Feather name="frown" size={150} color={"#rgba(0,0,0,0.3)"} />
               </View>
             )}
+            </View>
+            
+            </View>
     </SafeAreaView>
   );
 }
