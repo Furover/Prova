@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, TextInput, ActivityIndicator, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Feather } from 'react-native-vector-icons'
 import { useEffect, useState} from 'react'
@@ -11,6 +11,7 @@ import { ItemList } from '../../components/itemlist';
 export function Details({ navigation, route }) {
     const [listing, setListing] = useState({})
     const [loaded, setLoaded] = useState(false)
+    const width = Dimensions.get("window").width
 
     useEffect(()=>{
 
@@ -43,19 +44,38 @@ export function Details({ navigation, route }) {
 
         return() => subscriver()
     
-    },[loaded])
+    },[])
 
   return (
     <SafeAreaView  style={styles.container}>
-            <ScrollView>
+            <ScrollView contentContainerStyle={styles.scrollcontainer} >
                 {listing ? (
-                    <View style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
-                        <Text>{listing.Title}</Text>
+                    <View style={styles.content} >
+                        <View style={styles.imagearea} >
+                          <Image style={[styles.productimage, {width: width}]} source={{uri : listing.Image}} />
+                          <Text style={styles.titletxt} >{listing.Title}</Text> 
+                        </View>
+                        <View style={styles.pricearea} >
+                          <Text style={styles.pricetxt} >R${listing.Price}.00</Text>
+                          <TouchableOpacity style={styles.buybutton} >
+                            <Text style={styles.buytxt} >Comprar</Text>
+                          </TouchableOpacity>
+                        </View>
+                        <View style={styles.paymentways} >
+                          <Text style={styles.paymenttxt} >Em até 12 vezes de R${(listing.Price / 12).toFixed(2)}</Text>
+                        </View>
+                        <View style={styles.descriptionarea} >
+                          <Text style={styles.descriptiontitle} >Descrição</Text>
+                          <View style={styles.descriptiontxtarea} >
+                            <Text style={styles.descriptiontxt} >{listing.Description}</Text>
+                          </View>
+                        </View>
+                        
                     </View>
                 ) : (
 
                     <View style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
-                        <Text>Carregando...</Text>
+                        <ActivityIndicator size={110} color="#38BA9B" />
                     </View>
                 )}
             </ScrollView>
@@ -67,99 +87,110 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     display: 'flex',
+    backgroundColor: '#FFF'
+  },
+  scrollcontainer: {
+    width: "100%",
+    display: 'flex',
     backgroundColor: '#FFF',
-    alignItems: 'center',
-    justifyContent: 'flex-start'
+    alignItems: "center"
   },
-  searcharea:{
-    width: "100%",
-    borderColor: "#F2F2F2",
-    borderBottomWidth: 1.5,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingStart: 20,
-    paddingEnd: 20,
-    paddingVertical: 15,
-
-  },
-  searchinput:{
-    backgroundColor: "#F7F7F7",
-    borderRadius: 25,
-    fontSize: 20,
-    width: "100%",
-    paddingVertical: 5,
-    paddingLeft: 15,
-    paddingRight: 60,
-    color: "#000"
-
-  },
-  searchicon:{
-    position: 'absolute',
-    alignSelf: 'flex-end',
-    paddingRight: 35
-  },
-  logo:{
-    width: 50,
-    height: 37.45
-  },
-  greetings:{
-    marginTop: 20,
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: "100%",
-    paddingStart: 20,
-    paddingEnd: 20,
-
-
-  },
-  greetingstext:{
-    fontSize: 25,
-    fontWeight: '700',
-    width: "50%"
-  },
-  filter:{
-    padding: 5,
-    paddingHorizontal: 20,
-    backgroundColor: "#000",
-    borderRadius: 25,
-    alignItems: 'center',
-    flexDirection: 'row'
-  },
-  filtertext:{
-    fontSize: 20,
-    fontWeight: '700',
-    color: "#FFF",
-    marginRight: 10
-  },
-  filtericon:{
-
-  },
-  carousel:{
-    marginTop: 40,
-    alignItems: 'center',
-    borderRadius: 25,
-    backgroundColor: "#000"
-  },
-  carouseltxt:{
-    marginVertical: 5,
-    fontWeight: 'bold',
-    fontSize: 20,
-    color: "#FFF"
-  },
-  items:{
-    marginTop: 90,
-    backgroundColor: "#E06E8B",
+  content:{
     flex: 1,
     width: "100%",
+    display: 'flex', 
+    alignItems: 'center'
+  },
+  imagearea:{
+    width: "100%",
+    alignItems: "center",
+    backgroundColor: "#000",
+    borderBottomLeftRadius: 25,
+    borderBottomRightRadius: 25
+  },
+  productimage:{
+    height: 300,
+    borderBottomLeftRadius: 25,
+    borderBottomRightRadius: 25
+  },
+  titletxt:{
+    fontWeight: 'bold',
+    fontSize: 22,
+    marginVertical: 10,
+    color: "#FFF"
+  },
+  pricearea:{
     alignItems: 'center',
+    justifyContent: 'space-between',
+    width: "100%",
+    marginTop: 40,
+    flexDirection: 'row',
+    paddingStart: 20,
+    paddingEnd: 20
+  },
+  pricetxt:{
+    fontWeight: 'bold',
+    fontSize: 23,
+    maxWidth: "55%",
+    backgroundColor: "#000",
+    color: "#FFF",
+    padding: 5,
+    paddingHorizontal: 25,
     borderRadius: 25
   },
-  itemstxt:{
-    marginVertical: 5,
+  buybutton:{
+    backgroundColor: "#E06E8B",
+    padding: 5,
+    width: "40%",
+    alignItems: "center",
+    borderRadius: 25
+  },
+  buytxt:{
+    fontWeight: 'bold',
+    fontSize: 23,
+    color: "#FFF"
+  },
+  paymentways:{
+    width: "100%",
+    paddingStart: 20,
+    paddingEnd: 20,
+    marginTop: 30,
+  },
+  paymenttxt:{
+    fontSize: 19,
+    fontWeight: 'bold',
+    backgroundColor: "#38BA9B",
+    textAlign: "center",
+    padding: 5,
+    borderRadius: 25,
+    color: "#FFF"
+  },
+  descriptionarea:{
+    backgroundColor: "#38BA9B",
+    borderRadius: 25,
+    alignItems: "center",
+    width: "100%",
+    marginTop: 60
+  },
+  descriptiontitle:{
+    fontSize: 22,
     color: "#FFF",
-    fontSize: 20,
-    fontWeight: 'bold'
+    fontWeight: "bold",
+    marginVertical: 10
+  },
+  descriptiontxtarea:{
+    backgroundColor:"#FFF",
+    borderRadius: 25,
+    width: "100%",
+    alignItems: "center",
+    paddingTop: 20,
+  },
+  descriptiontxt:{
+    width: "90%",
+    fontSize: 18,
+    fontWeight: '400',
+    textAlign: "justify",
+    paddingBottom: 50
   }
 
 });

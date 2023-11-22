@@ -23,7 +23,6 @@ export function Onboarding(){
         if(screenHeight >= 650 && screenHeight <= 730 && screenWidth >= 400 && screenWidth <= 550 ){
             // 683 411 pixel 2a
             setImageHeight(screenHeight / 3)
-            console.log("medium display: ",screenHeight, screenWidth)
         } else if(screenHeight == 640 && screenWidth == 360){
             // 640 360 asus zenfone 3 and xiaomi mi a1, which is 1/3 of 1920x1080
             setImageHeight(screenHeight / 3.2)

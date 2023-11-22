@@ -64,14 +64,20 @@ export function Home({ navigation, route }) {
             <ScrollView>
               <View style={styles.greetings} >
                   <Text style={styles.greetingstext} >Olá {username}!</Text>
-                  <TouchableOpacity style={styles.filter} >
-                      <Text style={styles.filtertext} >Filtros</Text>
-                      <Feather name="filter" style={styles.filtericon} size={23} color={"#FFF"} />
+                  <TouchableOpacity activeOpacity={0.8} style={styles.cart} >
+                      <Text style={styles.carttxt} >Carrinho</Text>
+                      <Feather name="shopping-cart" style={styles.carticon} size={23} color={"#FFF"} />
                   </TouchableOpacity>
               </View>
               <View style={styles.carousel} >
                   <Text style={styles.carouseltxt} >Destaques</Text>
                   <Onboarding/>
+              </View>
+              <View style={styles.filterarea} >
+                <TouchableOpacity activeOpacity={0.8} style={styles.filterbutton} >
+                  <Text style={styles.filtertext} >Filtros</Text>
+                  <Feather style={styles.filtericon} name="filter" color={"#FFF"} size={25} />
+                </TouchableOpacity>
               </View>
               <View style={styles.items} >
                   <Text style={styles.itemstxt} >Anúncios</Text>
@@ -138,7 +144,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     width: "50%"
   },
-  filter:{
+  cart:{
     padding: 5,
     paddingHorizontal: 20,
     backgroundColor: "#000",
@@ -146,29 +152,56 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row'
   },
-  filtertext:{
+  carttxt:{
     fontSize: 20,
     fontWeight: '700',
     color: "#FFF",
-    marginRight: 10
+    marginRight: 15
   },
-  filtericon:{
-
+  carticon:{
   },
   carousel:{
-    marginTop: 40,
+    marginTop: 30,
     alignItems: 'center',
     borderRadius: 25,
     backgroundColor: "#000"
   },
   carouseltxt:{
-    marginVertical: 5,
+    marginVertical: 6,
     fontWeight: 'bold',
     fontSize: 20,
     color: "#FFF"
   },
+  filterarea:{
+    alignItems: 'center',
+    marginTop: 40,
+    marginBottom: 35,
+    width: "100%",
+    paddingStart: 20,
+    paddingEnd: 20
+  },
+  filterbutton:{
+    width: "100%",
+    backgroundColor: "#000",
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10,
+    borderRadius: 25,
+
+  },
+  filtertext:{
+    color: "#FFF",
+    fontWeight: "bold",
+    fontSize: 18
+  },
+  filtericon:{
+    position: "absolute",
+    alignSelf: "flex-end",
+    paddingRight: 20
+
+  },
   items:{
-    marginTop: 90,
+    marginTop: 0,
     backgroundColor: "#E06E8B",
     flex: 1,
     width: "100%",

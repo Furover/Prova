@@ -1,4 +1,4 @@
-import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useEffect, useState } from 'react';
 import { app_db } from '../../../firebaseConfig'
 import { collection, onSnapshot } from 'firebase/firestore'
@@ -44,13 +44,15 @@ export function ItemList({ navigation }){
                                     <Image style={styles.itemimage} source={{ uri : item.Image }} />
                                     <Text style={styles.itemtitle} >{item.Title}</Text>
                                     <Text style={styles.itemprice} >R${item.Price}.00</Text>
-                                    <TouchableOpacity onPress={() => navigation.navigate("Details", { paramKey:[item.key] })} style={styles.itemseebutton} >
-                                        <Text style={styles.itemseetxt} >Ver</Text>
+                                    <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.navigate("Details", { paramKey:[item.key] })} style={styles.itemseebutton} >
+                                        <Text style={styles.itemseetxt} >Ver Anúncio</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
                     ) : (
-                        <Text>Carregando...</Text>
+                        <View style={[styles.itemarea, {height: 200}]} >
+                            <ActivityIndicator size={100} color="#E06E8B" />
+                        </View>
                     )}
                     </View>
                 )}
@@ -66,7 +68,7 @@ const styles = StyleSheet.create({
         borderRadius: 25, 
         width: "100%", 
         flex: 1,
-        paddingTop: 10
+        paddingTop: 15
     },
     itemcontainer:{
         backgroundColor: "#F9F9F9", 
@@ -84,8 +86,8 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     },
     itemimage:{
-        height: 150,
-        width: 150,
+        height: 155,
+        width: 155,
         borderRadius: 10,
         marginBottom: 20
     },
@@ -109,7 +111,7 @@ const styles = StyleSheet.create({
     },
     itemseebutton:{
         width: "100%",
-        marginTop: 10,
+        marginTop: 11,
     },
     itemseetxt:{
         padding: 7,
