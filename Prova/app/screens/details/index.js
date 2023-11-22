@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Feather } from 'react-native-vector-icons'
 import { useEffect, useState} from 'react'
@@ -8,44 +8,35 @@ import { doc , collection, query, where, onSnapshot, documentId} from 'firebase/
 import { Onboarding } from '../../components/onboarding';
 import { ItemList } from '../../components/itemlist';
 
-export function Home({ navigation, route }) {
-    const [user, setUser] = useState({})
-    const [search, setSearch] = useState("");
+export function Details({ navigation, route }) {
+    const [listing, setListing] = useState({})
     const [loaded, setLoaded] = useState(false)
-    const [username, setUserName] = useState("...")
 
     useEffect(()=>{
 
         
-        console.log("pedi user")
-        const userRef = collection(app_db, 'Users')
+        const listingRef = collection(app_db, 'Listings')
     
         const q = query(
-            userRef,
-            where(documentId(), '==', app_auth.currentUser.uid)
+            listingRef,
+            where(documentId(), '==', route.params.paramKey[0])
         )
     
         
     
         const subscriver = onSnapshot(q, {
             next : (snapshot) => {
-                const userq = []
+                const listingq = []
                 
                 snapshot.docs.forEach(doc =>{
-                    userq.push({
+                    listingq.push({
                         key : doc.id,
                         ...doc.data(),
                        
                     })
                 })
-                setUser(userq[0])
-                setLoaded(true)
-
-                if(loaded){
-                    var nome = user.Nome
-                    var first = nome.split(' ')[0]
-                    setUserName(first)
-                }
+                setListing(listingq[0])
+                console.log(listing)
             
             }
         })
@@ -56,28 +47,17 @@ export function Home({ navigation, route }) {
 
   return (
     <SafeAreaView  style={styles.container}>
-            <View style={styles.searcharea} >
-                <TextInput value= {search} onChangeText={(text) => setSearch(text)} style={styles.searchinput} placeholder='Pesquisar' autoCapitalize='none' />
-                <Feather name="search" style={styles.searchicon} size={25} color={"rgba(0,0,0,0.75)"} />
-            </View>
             <ScrollView>
-            <ScrollView>
-              <View style={styles.greetings} >
-                  <Text style={styles.greetingstext} >Olá {username}!</Text>
-                  <TouchableOpacity style={styles.filter} >
-                      <Text style={styles.filtertext} >Filtros</Text>
-                      <Feather name="filter" style={styles.filtericon} size={23} color={"#FFF"} />
-                  </TouchableOpacity>
-              </View>
-              <View style={styles.carousel} >
-                  <Text style={styles.carouseltxt} >Destaques</Text>
-                  <Onboarding/>
-              </View>
-              <View style={styles.items} >
-                  <Text style={styles.itemstxt} >Anúncios</Text>
-                  <ItemList navigation={navigation} />
-              </View>
-              </ScrollView>
+                {listing ? (
+                    <View style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
+                        <Text>{listing.Title}</Text>
+                    </View>
+                ) : (
+
+                    <View style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
+                        <Text>Carregando...</Text>
+                    </View>
+                )}
             </ScrollView>
     </SafeAreaView>
   );

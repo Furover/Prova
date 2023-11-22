@@ -10,6 +10,7 @@ import { Register } from "../screens/register";
 import { Login } from "../screens/login";
 import { Home } from "../screens/home";
 import { ForgotPswd } from "../screens/forgotpswd";
+import { Details } from "../screens/details";
 
 const Stack = createNativeStackNavigator();
 
@@ -39,6 +40,11 @@ export default function Routes() {
       <Stack.Screen
         name="Home"
         component={Home}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Details"
+        component={Details}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

@@ -27,14 +27,12 @@ export function Onboarding(){
         } else if(screenHeight == 640 && screenWidth == 360){
             // 640 360 asus zenfone 3 and xiaomi mi a1, which is 1/3 of 1920x1080
             setImageHeight(screenHeight / 3.2)
-            console.log("small display: ",screenHeight, screenWidth)
         } else if(screenHeight < 640 && screenWidth < 360){
             setImageHeight(screenHeight / 3)
             console.log("small display: ",screenHeight, screenWidth)
         } else if(screenHeight >= 765 && screenWidth >= 300 && screenWidth <= 500) {
             //890 411 pixel 7, 770 360 galaxy s20
             setImageHeight(screenHeight / 3.9)
-            console.log("bigger display: ",screenHeight, screenWidth)
         } else if(screenHeight >= 800 && screenWidth >= 510 ) {
             setImageHeight(screenHeight / 4.5)
             console.log("weird display: ",screenHeight, screenWidth)
