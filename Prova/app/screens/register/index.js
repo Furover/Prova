@@ -7,30 +7,30 @@ import { doc, setDoc } from "firebase/firestore";
 import { app_auth, app_db } from '../../../firebaseConfig';
 
 export function Register({ navigation }) {
-    const [nome, setNome] = useState('')
+    const [name, setName] = useState('')
     const [email, setEmail] = useState('')
-    const [senha, setSenha] = useState('')
+    const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false);
 
     const SignUp = async () => {
         setLoading(true)
-        if(nome == ""){
+        if(name == ""){
             alert("Preencha o seu nome!")
             setLoading(false)
         } else if(email == "") {
             alert("Preencha o seu email!")
             setLoading(false)
-        } else if(senha == "") {
+        } else if(password == "") {
             alert("Preencha a sua senha!")
             setLoading(false)
         } else {
             try{
             
-                const response = await createUserWithEmailAndPassword(app_auth, email, senha)
+                const response = await createUserWithEmailAndPassword(app_auth, email, password)
 
                 await setDoc(doc(app_db, "Users", response.user.uid), {
-                    Nome : nome,
-                    Carrinho: [],
+                    Name : name,
+                    Cart: [],
 
 
                 })
@@ -60,7 +60,7 @@ export function Register({ navigation }) {
                 <Image style={styles.logo} source={require("../../assets/RestartFullLogoColorized.png")} />
             </View>
             <View style={styles.inputarea} >
-                <TextInput value= {nome} onChangeText={(text) => setNome(text)} style={styles.input} placeholder='Nome' autoCapitalize='none' />
+                <TextInput value= {name} onChangeText={(text) => setName(text)} style={styles.input} placeholder='Nome' autoCapitalize='none' />
                 <Feather name="user" style={styles.icon} size={25} color={"#000"} />
             </View>
             <View style={styles.lowerinputarea} >
@@ -68,7 +68,7 @@ export function Register({ navigation }) {
                 <Feather name="mail" style={styles.icon} size={25} color={"#000"} />
             </View>
             <View style={styles.lowerinputarea} >
-                <TextInput value= {senha} onChangeText={(text) => setSenha(text)} style={styles.input} placeholder='Senha' autoCapitalize='none' secureTextEntry={true} />
+                <TextInput value= {password} onChangeText={(text) => setPassword(text)} style={styles.input} placeholder='Senha' autoCapitalize='none' secureTextEntry={true} />
                 <Feather name="lock" style={styles.icon} size={25} color={"#000"} />
             </View>
             <View style={styles.buttonarea} >

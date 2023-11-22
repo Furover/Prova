@@ -3,7 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Feather } from 'react-native-vector-icons'
 import { useEffect, useState} from 'react'
 import { app_auth, app_db } from '../../../firebaseConfig'
-import { doc , collection, query, where, onSnapshot, documentId} from 'firebase/firestore'
+import { doc , collection, query, where, onSnapshot, documentId, updateDoc, arrayUnion } from 'firebase/firestore'
 
 import { Onboarding } from '../../components/onboarding';
 import { ItemList } from '../../components/itemlist';
@@ -46,6 +46,23 @@ export function Details({ navigation, route }) {
     
     },[])
 
+    const addCart = async () => {
+
+      const userRef = doc(app_db, "Users", app_auth.currentUser.uid)
+
+      try{
+        updateDoc(userRef,{
+          Cart: arrayUnion(route.params.paramKey[0])
+
+        })
+        navigation.navigate("Cart", {paramKey:[app_auth.currentUser.uid]})
+      } catch(error) {
+        console.log(error)
+        alert("Ocorreu um erro, tente novamente.")
+      }
+
+    }
+
   return (
     <SafeAreaView  style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollcontainer} >
@@ -57,7 +74,7 @@ export function Details({ navigation, route }) {
                         </View>
                         <View style={styles.pricearea} >
                           <Text style={styles.pricetxt} >R${listing.Price}.00</Text>
-                          <TouchableOpacity style={styles.buybutton} >
+                          <TouchableOpacity onPress={() => addCart()} style={styles.buybutton} >
                             <Text style={styles.buytxt} >Comprar</Text>
                           </TouchableOpacity>
                         </View>
@@ -123,7 +140,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     width: "100%",
-    marginTop: 40,
+    marginTop: 45,
     flexDirection: 'row',
     paddingStart: 20,
     paddingEnd: 20
@@ -154,7 +171,7 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingStart: 20,
     paddingEnd: 20,
-    marginTop: 30,
+    marginTop: 35,
   },
   paymenttxt:{
     fontSize: 19,
@@ -170,7 +187,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     alignItems: "center",
     width: "100%",
-    marginTop: 60
+    marginTop: 65
   },
   descriptiontitle:{
     fontSize: 22,

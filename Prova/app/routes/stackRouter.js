@@ -11,6 +11,9 @@ import { Login } from "../screens/login";
 import { Home } from "../screens/home";
 import { ForgotPswd } from "../screens/forgotpswd";
 import { Details } from "../screens/details";
+import { Cart } from "../screens/cart";
+import { Thanks } from "../screens/thanks";
+import { Search } from "../screens/search";
 
 const Stack = createNativeStackNavigator();
 
@@ -45,6 +48,21 @@ export default function Routes() {
       <Stack.Screen
         name="Details"
         component={Details}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Cart"
+        component={Cart}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Thanks"
+        component={Thanks}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Search"
+        component={Search}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

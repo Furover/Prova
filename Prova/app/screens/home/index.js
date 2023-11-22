@@ -42,8 +42,8 @@ export function Home({ navigation, route }) {
                 setLoaded(true)
 
                 if(loaded){
-                    var nome = user.Nome
-                    var first = nome.split(' ')[0]
+                    var name = user.Name
+                    var first = name.split(' ')[0]
                     setUserName(first)
                 }
             
@@ -54,17 +54,23 @@ export function Home({ navigation, route }) {
     
     },[loaded])
 
+    const handleSearch = () => {
+      if(search != ""){
+        navigation.navigate("Search", {paramKey:[search]})
+      }
+    }
+
   return (
     <SafeAreaView  style={styles.container}>
             <View style={styles.searcharea} >
-                <TextInput value= {search} onChangeText={(text) => setSearch(text)} style={styles.searchinput} placeholder='Pesquisar' autoCapitalize='none' />
+                <TextInput onSubmitEditing={() => handleSearch()} value= {search} onChangeText={(text) => setSearch(text)} style={styles.searchinput} placeholder='Pesquisar' autoCapitalize='none' />
                 <Feather name="search" style={styles.searchicon} size={25} color={"rgba(0,0,0,0.75)"} />
             </View>
             <ScrollView>
             <ScrollView>
               <View style={styles.greetings} >
                   <Text style={styles.greetingstext} >Olá {username}!</Text>
-                  <TouchableOpacity activeOpacity={0.8} style={styles.cart} >
+                  <TouchableOpacity onPress={() => navigation.navigate("Cart", {paramKey:[app_auth.currentUser.uid]})} activeOpacity={0.8} style={styles.cart} >
                       <Text style={styles.carttxt} >Carrinho</Text>
                       <Feather name="shopping-cart" style={styles.carticon} size={23} color={"#FFF"} />
                   </TouchableOpacity>
